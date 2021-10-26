@@ -31,6 +31,8 @@ export function NavBar() {
 
     const classes = useStyles();
     const authContext = useContext(AuthContext);
+    console.log('<NavBar />');
+    console.log('User is logged In : ' + authContext.isLoggedIn());
 
     return (
         <AppBar position="static" >
@@ -38,7 +40,7 @@ export function NavBar() {
                 <NavLink to='/'>
                     <img src={headerLogo} alt="" />
                 </NavLink>
-                {authContext.isLogged &&
+                {authContext.isLoggedIn() &&
                     <Box width='100%' display='flex' justifyContent='flex-end'>
                         <NavLink to='/contacts' className={classes.links}>
                             Contactos

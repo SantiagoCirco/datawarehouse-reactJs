@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import { AuthContext } from '../context/auth-context';
 
 
 export function useForm(sendLoginRequest, { validateForm, throwLoginError }) {
 
     const initValues = { email: '', password: '', };
+    let history = useHistory();
 
     const authContext = useContext(AuthContext);
     const [values, setValues] = useState(initValues);
@@ -32,7 +34,7 @@ export function useForm(sendLoginRequest, { validateForm, throwLoginError }) {
                     authContext.login(response.data);
                 } catch (error) {
                     setErrors(prev => ({ ...prev, form: error.message }));
-                } finally{
+                } finally {
                     setIsSubmiting(false)
                 }
             })();

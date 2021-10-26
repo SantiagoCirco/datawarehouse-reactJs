@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export const AuthContext = React.createContext({
     isLoggedIn: () => { },
@@ -8,9 +8,9 @@ export const AuthContext = React.createContext({
 
 export function AuthProvider({ children }) {
 
+
     const isLoggedIn = () => {
-        const authData = JSON.parse(window.localStorage.getItem('AUTH')) || '';
-        return !!authData;
+        return !!(JSON.parse(window.localStorage.getItem('AUTH')) || '');
     }
 
     const handleLogin = (userData) => {
@@ -18,7 +18,6 @@ export function AuthProvider({ children }) {
             'AUTH',
             JSON.stringify(userData)
         );
-        isLoggedIn();
     }
 
     const values = {

@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import { AuthContext, AuthProvider } from './context/auth-context';
+import { AuthContext } from './context/auth-context';
 import { NavBar } from './components/NavBar';
 import { LoginPage } from './components/login-page/LoginPage';
 import { ContactsPage } from './components/contacts-page/ContactsPage';
@@ -14,8 +14,11 @@ export default function App() {
 
   const authContext = useContext(AuthContext);
 
+  console.log('<App />');
+  console.log('User is logged In : ' + authContext.isLoggedIn());
+
   return (
-    <AuthProvider>
+    <>
       <NavBar />
       {!authContext.isLoggedIn() && <Redirect to='/login' />}
       <Switch>
@@ -46,6 +49,6 @@ export default function App() {
           }
         </Route>
       </Switch>
-    </AuthProvider>
+    </>
   );
 }
