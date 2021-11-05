@@ -1,5 +1,4 @@
-
-
+import { LOGIN_URL } from "../constants";
 
 const emailIsValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const passwordIsValid = (pass) => pass.length >= 6;
@@ -19,12 +18,8 @@ export const validateForm = ({ email, password }) => {
     return errors;
 }
 
-
-const BASE_URL = 'http://localhost:3000';
-const AUTH_URL = BASE_URL + '/v1/auth/login';
-
 export async function sendLoginRequest(credentials) {
-    const response = await fetch(AUTH_URL, {
+    const response = await fetch(LOGIN_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -33,10 +28,4 @@ export async function sendLoginRequest(credentials) {
     });
     const decodedResponse = await response.json();
     return decodedResponse
-}
-
-export const throwLoginError = (response) => {
-    const error = new Error(response.message);
-    error.name = response.code;
-    throw error;
 }

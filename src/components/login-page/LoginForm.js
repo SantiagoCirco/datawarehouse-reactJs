@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -5,8 +6,10 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 
+import { AuthContext } from '../../context/auth-context';
 import { useForm } from '../../hooks/use-form';
-import { sendLoginRequest, validateForm, throwLoginError } from '../../services/auth-service';
+import { sendLoginRequest, validateForm } from '../../services/auth-service';
+import { throwCustomError } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -27,14 +30,33 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const initialValues = { email: '', password: '' }
 
 export function LoginForm() {
 
     const classes = useStyles();
+    const authContext = useContext(AuthContext);
+
+    const handleLogin = async (handleErrors) => {
+        try {
+            const response = await sendLoginRequest(values);
+            if (!response.ok) throwCustomError(response);
+            authContext.login(response.data);
+            window.location.reload();
+        } catch (error) {
+            handleErrors(error);
+        }
+    }
 
     const {
-        values, errors, isSubmiting, handleSubmit, handleChange
-    } = useForm(sendLoginRequest, { validateForm, throwLoginError });
+        values,
+        errors,
+        isSubmiting,
+        handleSubmit,
+        handleChange
+    } = useForm(handleLogin, validateForm, initialValues);
+
+
 
     const formHasError = !!errors.form;
     const emailHasError = formHasError ? true : !!errors.email;
@@ -69,6 +91,7 @@ export function LoginForm() {
                     />
                 </Grid>
                 <Grid item xs={12}>
+                    {isSubmiting && !formHasError && <CircularProgress />}
                     {formHasError &&
                         <Typography
                             className={classes.errorText}
@@ -82,9 +105,10 @@ export function LoginForm() {
                         color='primary'
                         variant='contained'
                         disableElevation
+                        disabled={isSubmiting && !formHasError}
                         type='submit'
                         size='large'>
-                        {isSubmiting && !formHasError ? <CircularProgress /> : 'Ingresar'}
+                        Ingresar
                     </Button>
                 </Grid>
 

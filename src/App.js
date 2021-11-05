@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { AuthContext } from './context/auth-context';
@@ -10,42 +10,33 @@ import { LocationPage } from './components/location-page/LocationPage';
 import { UsersPage } from './components/users-page/UsersPage';
 
 
+
 export default function App() {
 
   const authContext = useContext(AuthContext);
 
-  console.log('<App />');
-  console.log('User is logged In : ' + authContext.isLoggedIn());
 
   return (
     <>
       <NavBar />
-      {!authContext.isLoggedIn() && <Redirect to='/login' />}
+      {!authContext.isLoggedIn && <Redirect to='/login' />}
       <Switch>
         <Route path='/login' exact>
           {
-            !authContext.isLoggedIn() ?
+            !authContext.isLoggedIn ?
               <LoginPage /> :
               <Redirect to='/contacts' />
           }
         </Route>
-        <Route path='/contacts' exact>
-          <ContactsPage />
-        </Route>
-        <Route path='/companies' exact>
-          <CompaniesPage />
-        </Route>
-        <Route path='/users' exact>
-          <UsersPage />
-        </Route>
-        <Route path='/location' exact>
-          <LocationPage />
-        </Route>
-        <Route path='*' exact>
+        <Route path='/contacts' exact><ContactsPage /></Route>
+        <Route path='/companies' exact> <CompaniesPage /></Route>
+        <Route path='/users' exact><UsersPage /></Route>
+        <Route path='/location' exact><LocationPage /></Route>
+        <Route path='*'>
           {
-            !authContext.isLoggedIn() ?
-              <Redirect to='/login' /> :
-              <Redirect to='/contacts' />
+            authContext.isLoggedIn ?
+              <Redirect to='/contacts' /> :
+              <Redirect to='/login' />
           }
         </Route>
       </Switch>

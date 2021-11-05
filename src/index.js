@@ -7,11 +7,11 @@ import { AuthProvider } from './context/auth-context';
 import './index.css';
 
 ReactDOM.render(
-  <AuthProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <AuthProvider>
       <App />
-    </BrowserRouter>
-  </AuthProvider>,
+    </AuthProvider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

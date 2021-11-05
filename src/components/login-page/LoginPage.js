@@ -28,7 +28,9 @@ export function LoginPage() {
                     </div>
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography align='center' component='h2' variant='h6'>Accedé a la plataforma con tu cuenta empresarial</Typography>
+                    <Typography align='center' component='h2' variant='h6'>
+                        Accedé a la plataforma con tu cuenta empresarial
+                    </Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <LoginForm />

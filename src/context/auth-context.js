@@ -1,29 +1,37 @@
 import React from 'react';
+import { useHistory } from "react-router";
+
+import { tokenService } from '../services/token-service';
 
 export const AuthContext = React.createContext({
-    isLoggedIn: () => { },
+    isLoggedIn: false,
     login: (userData) => { },
+    logout: () => { }
 });
 
 
 export function AuthProvider({ children }) {
 
-
-    const isLoggedIn = () => {
-        return !!(JSON.parse(window.localStorage.getItem('AUTH')) || '');
-    }
+    const initToken = tokenService.getTokenFromStorage();
+    const [storedToken] = React.useState(initToken);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(!!storedToken);
+    const history = useHistory();
 
     const handleLogin = (userData) => {
-        window.localStorage.setItem(
-            'AUTH',
-            JSON.stringify(userData)
-        );
+        tokenService.addTokenToStorage(userData);
+        setIsLoggedIn(true);
+    }
+
+    const handleLogout = () => {
+        tokenService.removeTokenFromStorage();
+        setIsLoggedIn(false);
+        history.replace('/login');
     }
 
     const values = {
         isLoggedIn,
         login: handleLogin,
-        // logout: handleLogout
+        logout: handleLogout
     }
 
     return (

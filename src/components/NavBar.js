@@ -11,7 +11,7 @@ import headerLogo from '../assets/header-logo.png';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
-        minHeight: '100px',
+        minHeight: '70px',
     },
     links: {
         fontSize: '.8em',
@@ -31,16 +31,12 @@ export function NavBar() {
 
     const classes = useStyles();
     const authContext = useContext(AuthContext);
-    console.log('<NavBar />');
-    console.log('User is logged In : ' + authContext.isLoggedIn());
 
     return (
         <AppBar position="static" >
             <Toolbar className={classes.appBar}>
-                <NavLink to='/'>
-                    <img src={headerLogo} alt="" />
-                </NavLink>
-                {authContext.isLoggedIn() &&
+                <img src={headerLogo} alt="logo" />
+                {authContext.isLoggedIn &&
                     <Box width='100%' display='flex' justifyContent='flex-end'>
                         <NavLink to='/contacts' className={classes.links}>
                             Contactos
@@ -56,7 +52,6 @@ export function NavBar() {
                         </NavLink>
                     </Box>
                 }
-
             </Toolbar>
         </AppBar>
     );
