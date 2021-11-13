@@ -33,7 +33,7 @@ export function NavBar() {
     const authContext = useContext(AuthContext);
 
     return (
-        <AppBar position="static" >
+        <AppBar position="sticky" >
             <Toolbar className={classes.appBar}>
                 <img src={headerLogo} alt="logo" />
                 {authContext.isLoggedIn &&

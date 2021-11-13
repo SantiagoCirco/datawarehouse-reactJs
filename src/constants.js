@@ -9,6 +9,7 @@ export const USER_URL = BASE_URL + '/v1/users';
 export const REGIONS_URL = BASE_URL + '/v1/regions';
 export const COUNTRIES_URL = REGIONS_URL + '/countries';
 export const CITIES_URL = COUNTRIES_URL + '/cities';
+export const COMPANIES_URL = BASE_URL + '/v1/companies';
 
 
 export function CustomError(name, message) {
@@ -22,7 +23,7 @@ export const ErrorCode = {
     NOT_ADMIN: 'NOT_ADMIN',
     INVALID_TOKEN: 'INVALID_TOKEN',
     SESSION_EXPIRED: 'SESSION_EXPIRED',
-
+    RESOURCE_NEEDED:'RESOURCE_NEEDED'
 }
 
 
@@ -46,6 +47,7 @@ export const httpRequest = async (url, AccesToken, config = {}) => {
     );
     const jsonResponse = await response.json();
     if (!response.ok) {
+        console.log(jsonResponse);
         throw CustomError(jsonResponse.code, jsonResponse.message);
     }
     return jsonResponse;

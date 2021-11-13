@@ -13,7 +13,7 @@ export function useFetchUsers() {
 
     const authContext = React.useContext(AuthContext);
 
-    const [isAdmin, setIsAdmin] = React.useState(false);
+    const [isAdmin, setIsAdmin] = React.useState(true);
     const [users, setUsers] = React.useState([]);
 
     React.useEffect(() => {

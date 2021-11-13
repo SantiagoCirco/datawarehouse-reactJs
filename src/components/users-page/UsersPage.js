@@ -77,6 +77,10 @@ export function UsersPage() {
                         warning={warning}
                         handleClose={handleWarningClose}
                         handleDelete={handleDelete}
+                        textContent={{
+                            title: 'Eliminar Usuario',
+                            description: 'Una vez eliminado el usuario, no podrá volver a habilitarlo. ¿Está seguro que desea continuar?'
+                        }}
                     />
                 }
                 <UsersList
